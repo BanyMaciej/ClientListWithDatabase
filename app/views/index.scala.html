@@ -1,0 +1,33 @@
+@()
+@main("Nowy klient") {
+    <div class="container" ng-controller="submitController">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="get" ng-submit="submitForm()">
+                    <div class="form-group">
+                        <label for="firstName">Imię
+                            <input ng-model="firstName" type="text" class="form-control" placeholder="Imię">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Wiek
+                            <input ng-model="age" type="number" class="form-control" placeholder="Wiek">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Zawód
+                            <select ng-model="profession" class="form-control">
+                                <option value="doctor">lekarz</option>
+                                <option value="baker">piekarz</option>
+                                <option value="firefighter">strażak</option>
+                                <option value="policeman">policjant</option>
+                            </select>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Zapisz </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+}
