@@ -1,33 +1,46 @@
 @()
+
 @main("Nowy klient") {
-    <div class="container" ng-controller="submitController">
+    <div class="container" ng-controller="submitCtrl">
         <div class="row">
-            <div class="col-md-6">
-                <form method="get" ng-submit="submitForm()">
+            <div class="col-sm-4">
+                <form ng-submit="=submitNewClientForm()">
                     <div class="form-group">
-                        <label for="firstName">Imię
-                            <input ng-model="firstName" type="text" class="form-control" placeholder="Imię">
-                        </label>
+                        <h3>Imię</h3>
+                        <input ng-model="firstName" type="text" class="form-control" placeholder="Imię">
                     </div>
                     <div class="form-group">
-                        <label for="age">Wiek
-                            <input ng-model="age" type="number" class="form-control" placeholder="Wiek">
-                        </label>
+                        <h3>Wiek</h3>
+                        <input ng-model="age" type="number" class="form-control" placeholder="Wiek">
                     </div>
                     <div class="form-group">
-                        <label for="profession">Zawód
-                            <select ng-model="profession" class="form-control">
-                                <option value="doctor">lekarz</option>
-                                <option value="baker">piekarz</option>
-                                <option value="firefighter">strażak</option>
-                                <option value="policeman">policjant</option>
-                            </select>
-                        </label>
+                        <h3>Zawód</h3>
+                        <select ng-model="profession" class="form-control">
+                            <option value="doctor">lekarz</option>
+                            <option value="baker">piekarz</option>
+                            <option value="firefighter">strażak</option>
+                            <option value="policeman">policjant</option>
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Zapisz </button>
+
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+
+                    <a class="float-sm-right" href="/clients/clientList">Wczytaj</a>
+
+
+
                 </form>
             </div>
 
+            <div class="col-md-6">
+                <div ng-repeat="client in clients"
+                ng-init="client.checked=false"
+                ng-click="client.checked = !client.checked">
+                    {{client.firstName + ", " + client.age + " lat, " + client.profession + "/" + client.checked}}
+                        <div ng-repeat="n in client.phoneNumbers" ng-if="client.checked">{{n}}</div>
+                        <div ng-if="client.checked && client.phoneNumbers.length ==0">Brak!</div>
+                </div>
+            </div>
         </div>
     </div>
 }
