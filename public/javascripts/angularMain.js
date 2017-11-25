@@ -29,7 +29,7 @@ app.controller('clientsCtrl', function ($scope, $http) {
             id: client.id,
             number: number
         };
-        $http.post('/clients/addNumber', data).then(
+        $http.post('/clients/addPhoneNumber', data).then(
             function (response) {
                 var lClient = $scope.clients.find(function (c) {
                     return angular.equals(c, client);

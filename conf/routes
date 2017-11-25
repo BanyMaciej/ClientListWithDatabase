@@ -1,6 +1,6 @@
 GET         /                               controllers.HomeController.index
 + nocsrf
-POST        /clients/addNumber          controllers.ClientController.addNumber
+POST        /clients/addPhoneNumber          controllers.ClientController.addPhoneNumberToClient
 + nocsrf
 POST        /clients/addNewClientRequest    controllers.ClientController.addNewClientRequest
 GET         /clients/getAllRequest          controllers.ClientController.getAllRequest
