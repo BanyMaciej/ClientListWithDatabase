@@ -3,16 +3,16 @@
 @main("Klienci") {
     <div class="container" ng-controller="clientsCtrl" ng-init="getAll()">
         <div class="row">
-            <div class="col-md-4">Imię</div>
-            <div class="col-md-3">Wiek</div>
-            <div class="col-md-5">Zawód</div>
+            <div class="col-sm-4">Imię</div>
+            <div class="col-sm-3">Wiek</div>
+            <div class="col-sm-5">Zawód</div>
         </div>
         <div class="row" ng-repeat="client in clients"
         ng-init="client.checked=false">
             <div class="row" ng-click="client.checked = !client.checked">
-                <div class="col-md-4">{{client.firstName}}</div>
-                <div class="col-md-3">{{client.age}}</div>
-                <div class="col-md-5">{{client.profession}}</div>
+                <div class="col-sm-4">{{client.firstName}}</div>
+                <div class="col-sm-3">{{client.age}}</div>
+                <div class="col-sm-5">{{client.profession}}</div>
             </div>
             <div class="row" ng-if="client.checked">
                 <div class="col">

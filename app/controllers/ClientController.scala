@@ -16,15 +16,6 @@ class ClientController @Inject()(db: Database, cc: ControllerComponents) extends
         Ok(views.html.client_list())
     }
 
-    def addNumber() = Action (parse.json) { request =>
-        val id = getNumberFromJson(request.body, "id")
-        val number = getNumberFromJson(request.body, "number")
-
-        Ok
-    }
-
-
-
     //POST AND GET IMPLEMENTATIONS
     def addNewClientRequest() = Action { implicit request =>
         form.bindFromRequest.fold({ errorForm: Form[ClientData] =>
@@ -35,9 +26,16 @@ class ClientController @Inject()(db: Database, cc: ControllerComponents) extends
         Ok
     }
 
+    def addPhoneNumberToClient() = Action (parse.json) { implicit request =>
+        val id = getLongFromJson(request.body, "id").toInt
+        val number = getLongFromJson(request.body, "number")
+        databaseAddPhoneNumberToClient(id, number)
+        Ok
+    }
+
     def getAllRequest = Action { implicit request =>
         val resultList = databaseGetAllClients()
-        implicit val clientFormat = Json.format[Client]
+        implicit val clientFormat: OFormat[Client] = Json.format[Client]
         val jsonResult = Json.obj("clients" -> resultList)
         println(jsonResult)
         Ok(jsonResult)
@@ -114,9 +112,9 @@ class ClientController @Inject()(db: Database, cc: ControllerComponents) extends
         return clients
     }
 
-    private def databaseAddNumberToClient(id: Int, number: Long) = db.withConnection { connection: java.sql.Connection =>
+    private def databaseAddPhoneNumberToClient(id: Int, number: Long) = db.withConnection { connection: java.sql.Connection =>
         println(SQLQUERIES(4).format(id, number))
-        val result = connection.createStatement.executeUpdate(
+        connection.createStatement.executeUpdate(
             SQLQUERIES(4).format(
                 id,
                 number
@@ -125,7 +123,7 @@ class ClientController @Inject()(db: Database, cc: ControllerComponents) extends
     }
 
     //UTILS
-    private def getNumberFromJson(json: JsValue, field: String): Number = {
-        return (json \ field).as[Number]
+    private def getLongFromJson(json: JsValue, field: String): Long = {
+        return (json \ field).as[Long]
     }
 }
