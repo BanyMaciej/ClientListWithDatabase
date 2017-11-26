@@ -3,43 +3,33 @@
 @main("Nowy klient") {
     <div class="container" ng-controller="submitCtrl">
         <div class="row">
-            <div class="col-sm-4">
-                <form ng-submit="=submitNewClientForm()">
+            <div class="col-sm-6">
+                <form ng-submit="submitNewClientForm()">
                     <div class="form-group">
                         <h3>Imię</h3>
-                        <input ng-model="firstName" type="text" class="form-control" placeholder="Imię">
+                        <input ng-model="firstName" type="text" class="form-control" placeholder="Imię"
+                         first-name-valid>
                     </div>
                     <div class="form-group">
                         <h3>Wiek</h3>
-                        <input ng-model="age" type="number" class="form-control" placeholder="Wiek">
+                        <input ng-model="age" type="number" class="form-control" placeholder="Wiek" age-valid>
                     </div>
                     <div class="form-group">
                         <h3>Zawód</h3>
                         <select ng-model="profession" class="form-control">
-                            <option value="doctor">lekarz</option>
+                            <option value="doctor" selected="selected">lekarz</option>
                             <option value="baker">piekarz</option>
                             <option value="firefighter">strażak</option>
                             <option value="policeman">policjant</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Zapisz</button>
-
-                    <a class="float-sm-right" href="/clients/clientList">Wczytaj</a>
-
-
-
+                    <button type="submit" class="btn btn-primary" ng-disabled="!isFirstNameValid || !isAgeValid">Zapisz</button>
+                    <a href="/clients/clientList">Pokaż listę klientów</a>
                 </form>
             </div>
-
-            <div class="col-md-6">
-                <div ng-repeat="client in clients"
-                ng-init="client.checked=false"
-                ng-click="client.checked = !client.checked">
-                    {{client.firstName + ", " + client.age + " lat, " + client.profession + "/" + client.checked}}
-                        <div ng-repeat="n in client.phoneNumbers" ng-if="client.checked">{{n}}</div>
-                        <div ng-if="client.checked && client.phoneNumbers.length ==0">Brak!</div>
-                </div>
+            <div class="col-sm-4">
+                <h4>{{errNameMsg}}<br>{{errAgeMsg}}</h4>
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@ GET         /                               controllers.HomeController.index
 POST        /clients/addPhoneNumber          controllers.ClientController.addPhoneNumberToClient
 + nocsrf
 POST        /clients/addNewClientRequest    controllers.ClientController.addNewClientRequest
++ nocsrf
+POST        /clients/searchRequest          controllers.ClientController.getClientsFromSearchRequest
 GET         /clients/getAllRequest          controllers.ClientController.getAllRequest
 GET         /clients/clientList             controllers.ClientController.clientList
 GET         /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)

@@ -3,37 +3,61 @@
 @main("Klienci") {
     <div class="container" ng-controller="clientsCtrl" ng-init="getAll()">
         <div class="row">
-            <div class="col-sm-4">Imię</div>
-            <div class="col-sm-3">Wiek</div>
-            <div class="col-sm-5">Zawód</div>
-        </div>
-        <div class="row" ng-repeat="client in clients"
-        ng-init="client.checked=false">
-            <div class="row" ng-click="client.checked = !client.checked">
-                <div class="col-sm-4">{{client.firstName}}</div>
-                <div class="col-sm-3">{{client.age}}</div>
-                <div class="col-sm-5">{{client.profession}}</div>
-            </div>
-            <div class="row" ng-if="client.checked">
-                <div class="col">
-                    <div ng-repeat="n in client.phoneNumbers" ng-if="client.phoneNumbers.length > 0">{{n}}</div>
-
-                @*<div ng-if="client.phoneNumbers.length == 0">*@
-
-                <form ng-submit="submitNewNumberForm(client, number)">
-                    <div class="row">
-                        <div class="col">
-                            <input type="number" ng-model="number"/>
-                            <input type="submit" value="Submit"/>
-                        </div>
-                    </div>
-                </form>
-
-
-                @*</div>*@
-            </div>
+            <form ng-submit="submitSearch()" class="form-horizontal">
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" placeholder="Szukaj" ng-model="searchField"/>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" type="submit" value="Szukaj"/>
+                </div>
+            </form>
+            <div class="col-sm-2">
+                <button class="form-control" href="/">Dodaj nowego klienta</button>
             </div>
         </div>
+        <table class="table table-hover">
+            <thead>
+                <tr class="row table">
+                    <th class="col-sm-4">Imię</th>
+                    <th class="col-sm-3">Wiek</th>
+                    <th class="col-sm-5">Zawód</th>
+                </tr>
+            </thead>
+
+            <tbody ng-repeat="client in clients">
+                <tr class="row" ng-class="getPhoneNumbersStyle(client)" ng-init="client.checked=false" ng-click="client.checked = !client.checked">
+                    <td class="col-sm-4">{{client.firstName}}</td>
+                    <td class="col-sm-3">{{client.age}}</td>
+                    <td class="col-sm-5">{{client.profession}}</td>
+                </tr>
+                <tr class="row"  ng-if="client.checked && client.phoneNumbers.length > 0" ng-repeat="n in client.phoneNumbers">
+                    <td style="padding-left: 20px; " colspan="3">{{n}}</td>
+                </tr>
+                <tr class="row" ng-if="client.checked">
+                    <td colspan="3" style="padding-left: 20px;">
+                        <form class="form-horizontal" ng-submit="submitNewNumberForm(client, number)">
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" pattern="[0-9]*" onsubmit="number=''" ng-model="number" phone-number-valid phone-number-exist-valid="$index" placeholder="Nowy numer"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <input class="col-sm-1 form-control" type="submit" value="Zapisz" ng-disabled="!isNewNumberValid || !isNewNumberNotExistValid"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6>{{errNumMsg}}<br>{{errNumExistMsg}}</h6>
+                            </div>
+                        </form>
+
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="clients.length == 0">
+                <tr class="row align-items-center">
+                    <td colspan="3">
+                        <h3> Brak klientów! <a href="/">Dodaj nowego klienta!</a> </h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 }
