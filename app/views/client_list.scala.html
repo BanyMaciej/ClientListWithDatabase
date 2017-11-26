@@ -28,7 +28,7 @@
                 <tr class="row" ng-class="getPhoneNumbersStyle(client)" ng-init="client.checked=false" ng-click="client.checked = !client.checked">
                     <td class="col-sm-4">{{client.firstName}}</td>
                     <td class="col-sm-3">{{client.age}}</td>
-                    <td class="col-sm-5">{{client.profession}}</td>
+                    <td class="col-sm-5">{{getProfessionName(client.profession)}}</td>
                 </tr>
                 <tr class="row"  ng-if="client.checked && client.phoneNumbers.length > 0" ng-repeat="n in client.phoneNumbers">
                     <td style="padding-left: 20px; " colspan="3">{{n}}</td>

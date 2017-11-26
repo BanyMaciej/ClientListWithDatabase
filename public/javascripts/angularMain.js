@@ -40,6 +40,16 @@ app.controller('clientsCtrl', function ($scope, $http) {
         );
     };
 
+    $scope.getProfessionName = function (name) {
+        switch(name) {
+            case "baker": return "piekarz";
+            case "doctor": return "doktor";
+            case "firefighter": return "strażak";
+            case "policeman": return "policjant";
+
+        }
+    }
+
     $scope.getPhoneNumbersStyle = function (client) {
         switch( client.phoneNumbers.length ) {
             case 0: return 'none';

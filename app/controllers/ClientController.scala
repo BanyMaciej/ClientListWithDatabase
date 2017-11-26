@@ -20,16 +20,29 @@ class ClientController @Inject()(db: Database, cc: ControllerComponents) extends
     //POST AND GET IMPLEMENTATIONS
     def addNewClientRequest() = Action { implicit request =>
         form.bindFromRequest.fold({ errorForm: Form[ClientData] =>
+            BadRequest
         }, { successClient: ClientData =>
             databaseAddClient(successClient)
+            Ok
         })
-        Ok
     }
 
     def addPhoneNumberToClient() = Action (parse.json) { implicit request =>
-        val id = getIntFromJson(request.body, "id")
-        val number = getIntFromJson(request.body, "number")
-        databaseAddPhoneNumberToClient(id, number)
+        try {
+            val id = getIntFromJson(request.body, "id")
+            val number_test = getStringFromJson(request.body, "number")
+            if( number_test.length() != 9 || number_test.charAt(0).equals('0') ) {
+                throw new Exception
+            }
+            val number = number_test.toInt
+
+            databaseAddPhoneNumberToClient(id, number)
+        } catch {
+            case exception: Exception =>  {
+                println(exception)
+                BadRequest
+            }
+        }
         Ok
     }
 
